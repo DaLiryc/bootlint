@@ -2,6 +2,8 @@
 [![NPM version](https://badge.fury.io/js/bootlint.svg)](http://badge.fury.io/js/bootlint)
 [![Build Status](https://img.shields.io/travis/twbs/bootlint/master.svg)](https://travis-ci.org/twbs/bootlint)
 [![Coverage Status](https://img.shields.io/coveralls/twbs/bootlint.svg?branch=master)](https://coveralls.io/r/twbs/bootlint)
+![Development Status :: 5 - Production/Stable](https://img.shields.io/badge/maturity-stable-green.svg "Development Status :: 5 - Production/Stable")
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg "MIT License")](https://github.com/twbs/bootlint/blob/master/LICENSE)
 [![Dependency Status](https://david-dm.org/twbs/bootlint.svg)](https://david-dm.org/twbs/bootlint)
 [![devDependency Status](https://david-dm.org/twbs/bootlint/dev-status.svg)](https://david-dm.org/twbs/bootlint#info=devDependencies)
 
@@ -20,27 +22,31 @@ Bootlint assumes that you are using Bootstrap's default class names in your webp
 
 To use Bootlint with [Grunt](http://gruntjs.com/), use the official Grunt plugin: [grunt-bootlint](https://github.com/twbs/grunt-bootlint)
 
+### Via Gulp
+
+If you want to use Bootlint with [Gulp](http://gulpjs.com), there is an *unofficial* Gulp plugin: [gulp-bootlint](https://github.com/tschortsch/gulp-bootlint)
+
 ### On the command line
 Install the module with: `npm install -g bootlint`
 
 Run it on some HTML files:
-```
+```shell
 $ bootlint /path/to/some/webpage.html another_webpage.html [...]
 ```
 
 This will output the lint warnings applicable to each file.
 
 The CLI also accepts a `--disable` (or `-d`) option to disable certain lint checks. `--disable` takes a comma-separated list of [lint problem IDs](https://github.com/twbs/bootlint/wiki). Here's an example:
-```
+```shell
 $ bootlint -d W002,E020 /path/to/some/webpage.html another_webpage.html [...]
 ```
 
 The CLI will also process `stdin` input which means that you can pipe into Bootlint:
-```
+```shell
 $ cat mypage.html | bootlint
 ```
 Or you could use a heredoc (mostly useful for quick testing):
-```
+```shell
 $ bootlint << EOF
 <button class="btn btn-default">Is this correct Bootstrap markup, Bootlint?</button>
 EOF
@@ -48,7 +54,7 @@ EOF
 
 ### In the browser
 Use the following [bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) that's powered by [BootstrapCDN](http://www.bootstrapcdn.com/#bootlint_tab):
-```
+```js
 javascript:(function(){var s=document.createElement("script");s.onload=function(){bootlint.showLintReportForCurrentDocument([]);};s.src="https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";document.body.appendChild(s)})();
 ```
 Then check the JavaScript console for lint warning messages.
@@ -110,7 +116,7 @@ In a browser environment, the following public APIs are available:
 
 Example:
 
-```javascript
+```js
 var bootlint = require('bootlint');
 
 function reporter(lint) {
@@ -139,7 +145,7 @@ POST an HTML document to `/` and the document's lint problems will be returned a
 The endpoint accepts an optional querystring argument named `disable`, whose value is a comma-separated list of linter IDs to disable.
 
 Example:
-```
+```http
 Request:
   POST / HTTP/1.1
   Content-Type: text/html
@@ -172,8 +178,13 @@ _Also, please don't edit files in the "dist" subdirectory as they are generated 
 ## Release History
 See the [GitHub Releases page](https://github.com/twbs/bootlint/releases) for detailed changelogs.
 * (next release) - `master`
+* 2015-11-25 - v0.14.2: Fix critical CLI bug introduced in v0.14.0 and add tests to prevent its recurrence. Update current Bootstrap version to v3.3.6.
+* 2015-11-16 - v0.14.1: Forgot to regenerate browser version when tagging v0.14.0
+* 2015-11-16 - v0.14.0: Adds 3 new lint checks.
+* 2015-11-15 - v0.13.0: Removes E036. Adds a few new checks. Bumps dependency versions.
+* 2015-03-16 - v0.12.0: Adds warning if Bootstrap v4 is detected (since Bootlint is currently only compatible with Bootstrap v3). Minor fixes to some existing lint checks.
 * 2015-02-23 - v0.11.0: Adds several new lint checks. Improves stdin handling. Bumps dependency versions.
-* 2014-01-21 - v0.10.0: By default, the in-browser version now `alert()`s when no lint problems are found. Adds validity check for carousel control & indicator targets.
+* 2015-01-21 - v0.10.0: By default, the in-browser version now `alert()`s when no lint problems are found. Adds validity check for carousel control & indicator targets.
 * 2015-01-07 - v0.9.2: Fixes a problem when using the CLI via node's `child_process.exec`.
 * 2014-12-19 - v0.9.1: Fixes a W013 false positive.
 * 2014-12-18 - v0.9.0: Fixes several small bugs and tweaks a few existing checks. Adds 4 new lint checks.
